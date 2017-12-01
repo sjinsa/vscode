@@ -1,3 +1,8 @@
+# import sys
+# if "E:\python\\ai\lecture-1" not in sys.path:
+#     sys.path.append("E:\python\\ai\lecture-1")
+
+# print(str(sys.path))
 import numpy as np
 import scipy
 import h5py
@@ -5,7 +10,7 @@ import matplotlib.pyplot as plt
 import math
 from PIL import Image
 from scipy import ndimage
-from lr_utils import load_dataset
+from common.lr_utils import load_dataset
 
 train_set_x_orig, train_set_y, test_set_x_orig, test_set_y, classes = load_dataset()
 m_train = train_set_x_orig.shape[0]
