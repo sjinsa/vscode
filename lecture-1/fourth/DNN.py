@@ -9,6 +9,17 @@ from dnn_utils_v2 import *
 from common.lr_utils import load_dataset
 from BDNN import *
 
+'''
+Steps for build a model:
+1. Initialize parameters / Define hyperparameters
+2. Loop for num_iterations:
+    a. Forward propagation
+    b. Compute cost function
+    c. Backward propagation
+    d. Update parameters (using paramters, and grads from backprop)
+4. Use trained parameters to predict labels
+'''
+
 def two_layer_model(X, Y, layer_dims, learning_rate = 0.0075, num_iterations = 3000, print_cost = False):
     '''
     Implement a two-layer neural network: LINEAR->RELU->LINEAR->SIGMOID
@@ -59,11 +70,11 @@ def two_layer_model(X, Y, layer_dims, learning_rate = 0.0075, num_iterations = 3
     plt.ylabel("cost")
     plt.xlabel("iterations (per tens)")
     plt.title("Learning rate = " + str(learning_rate))
-    plt.show()
+    # plt.show()
     return parameters
 
 
-def L_layer_model(X, Y, layer_dims, learning_rate = 0.1, num_iterations = 3000, print_cost = False):
+def L_layer_model(X, Y, layer_dims, learning_rate = 0.0075, num_iterations = 3000, print_cost = False):
     '''
     Implements a L-layer neural network: [LINEAR->RELU]*(L-1)->LINEAR->SIGMOID.
     
@@ -93,8 +104,8 @@ def L_layer_model(X, Y, layer_dims, learning_rate = 0.1, num_iterations = 3000, 
     plt.ylabel("cost")
     plt.xlabel("iterations (per tens)")
     plt.title("Learning rate = " + str(learning_rate))
-    plt.show()
-    return parameters 
+    # plt.show()
+    return parameters
 
 def predict_accuracy_for_2L(X, Y, parameters):
     W1 = parameters["W1"]
@@ -106,6 +117,17 @@ def predict_accuracy_for_2L(X, Y, parameters):
     accuracy = float((np.dot(Y,A2.T) + np.dot(1-Y,1-A2.T))/float(Y.size)*100)
     return accuracy
 
+def predict_accuracy_for_NL(X, Y, parameters):
+    AL, caches = L_model_forward(X, parameters)
+    accuracy = float((np.dot(Y,AL.T) + np.dot(1-Y,1-AL.T))/float(Y.size)*100)
+    return accuracy
+
+def test_own_image(file_path, num_px, parameters):
+    image = np.array(ndimage.imread(file_path, flatten=False))
+    my_image = scipy.misc.imresize(image, size = (num_px, num_px)).reshape((num_px*num_px*3, 1))
+    AL, cache = L_model_forward(my_image, parameters)
+    my_predict = np.squeeze(AL) >= 0.5
+
 if __name__ == "__main__":
 
     plt.rcParams["figure.figsize"] = (5.0, 4.0) # set default size of plots
@@ -116,15 +138,15 @@ if __name__ == "__main__":
     train_x_orig, train_y, test_x_orig, test_y, classes = load_dataset()
 
     # Example of a picture
-    # index = 10
+    # index = 11
     # plt.imshow(train_x_orig[index])
     # plt.show()
     # print ("y = " + str(train_y[0,index]) + ". It's a " + classes[train_y[0,index]].decode("utf-8") +  " picture.")
 
     # Explore your dataset
-    m_train = train_x_orig.shape[0]
-    num_px = train_x_orig[1]
-    m_test = test_x_orig.shape[0]
+    # m_train = train_x_orig.shape[0]
+    # num_px = train_x_orig[1]
+    # m_test = test_x_orig.shape[0]
     # print ("Number of training examples: " + str(m_train))
     # print ("Number of testing examples: " + str(m_test))
     # print ("Each image is of size: (" + str(num_px) + ", " + str(num_px) + ", 3)")
@@ -140,20 +162,29 @@ if __name__ == "__main__":
     # Standardize data to have feature values between 0 and 1
     train_x = train_x_flatten/255
     test_x = test_x_flatten/255
-    # print("train_x's shape:" + str(train_x.shape))
-    # print("test_x's shape:" + str(test_x.shape))
+    print("train_x's shape:" + str(train_x.shape))
+    print("test_x's shape:" + str(test_x.shape))
 
-    # two-layer neural network
-    n_x = 12288
-    n_h = 7
-    n_y = 1
-    # layer_dims = (n_x, n_h, n_y)
+    # # two-layer neural network
+    # n_x = 12288
+    # n_h = 7
+    # n_y = 1
+    # # layer_dims = (n_x, n_h, n_y)
 
-    # parameters = two_layer_model(train_x, train_y, layer_dims, num_iterations = 2500, print_cost = True)
+    # # parameters = two_layer_model(train_x, train_y, layer_dims, num_iterations = 2500, print_cost = True)
 
-    # predictions_train = predict_accuracy_for_2L(train_x, train_y, parameters)
+    # # predictions_train = predict_accuracy_for_2L(train_x, train_y, parameters)
+    # # print(predictions_train)
+
+    # # predictions_test = predict_accuracy_for_2L(test_x, test_y, parameters)
+    # # print(predictions_test)
+
+    # layer_dims = [12288, 20, 7, 5, 1]
+    # parameters = L_layer_model(train_x, train_y, layer_dims, num_iterations = 2500, print_cost = True)
+    # predictions_train = predict_accuracy_for_NL(train_x, train_y, parameters)
     # print(predictions_train)
+    
+    # predictions_test = predict_accuracy_for_NL(test_x, test_y, parameters)
+    # print(predictions_test)
 
-    layer_dims = [12288, 20, 7, 5, 1]
-    parameters = L_layer_model(train_x, train_y, layer_dims, num_iterations = 2500, print_cost = True)
 
