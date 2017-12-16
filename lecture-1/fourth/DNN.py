@@ -114,7 +114,7 @@ def predict_accuracy_for_2L(X, Y, parameters):
     b2 = parameters["b2"]
     A1, cache1 = linear_activation_forward(X, W1, b1, "relu")
     A2, cache2 = linear_activation_forward(A1, W2, b2, "sigmoid")
-    accuracy = float((np.dot(Y,A2.T) + np.dot(1-Y,1-A2.T))/float(Y.size)*100)
+    accuracy = float((np.dot(Y, A2.T) + np.dot(1-Y, 1-A2.T))/float(Y.size))
     return accuracy
 
 def predict_accuracy_for_NL(X, Y, parameters):
@@ -160,24 +160,22 @@ if __name__ == "__main__":
     test_x_flatten = test_x_orig.reshape(test_x_orig.shape[0], -1).T
 
     # Standardize data to have feature values between 0 and 1
-    train_x = train_x_flatten/255
-    test_x = test_x_flatten/255
-    print("train_x's shape:" + str(train_x.shape))
-    print("test_x's shape:" + str(test_x.shape))
+    train_x = train_x_flatten/255.
+    test_x = test_x_flatten/255.
+    # print("train_x's shape:" + str(train_x.shape))
+    # print("test_x's shape:" + str(test_x.shape))
 
-    # # two-layer neural network
-    # n_x = 12288
-    # n_h = 7
-    # n_y = 1
-    # # layer_dims = (n_x, n_h, n_y)
+    # two-layer neural network Done
+    n_x = 12288
+    n_h = 7
+    n_y = 1
+    layer_dims = (n_x, n_h, n_y)
+    parameters = two_layer_model(train_x, train_y, layer_dims = (n_x, n_h, n_y), num_iterations = 3000, print_cost = False)
+    predictions_train = predict_accuracy_for_2L(train_x, train_y, parameters)
+    print(predictions_train)
 
-    # # parameters = two_layer_model(train_x, train_y, layer_dims, num_iterations = 2500, print_cost = True)
-
-    # # predictions_train = predict_accuracy_for_2L(train_x, train_y, parameters)
-    # # print(predictions_train)
-
-    # # predictions_test = predict_accuracy_for_2L(test_x, test_y, parameters)
-    # # print(predictions_test)
+    predictions_test = predict_accuracy_for_2L(test_x, test_y, parameters)
+    print(predictions_test)
 
     # layer_dims = [12288, 20, 7, 5, 1]
     # parameters = L_layer_model(train_x, train_y, layer_dims, num_iterations = 2500, print_cost = True)

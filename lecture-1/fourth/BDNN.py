@@ -27,7 +27,7 @@ def initialaize_parameters(n_x, n_h, n_y):
     np.random.seed(1)
     W1 = np.random.randn(n_h, n_x)*0.01
     b1 = np.zeros((n_h, 1))
-    W2 = np.random.randn(n_y, n_h)
+    W2 = np.random.randn(n_y, n_h)*0.01
     b2 = np.zeros((n_y, 1))
 
     assert(W1.shape == (n_h, n_x))
@@ -264,51 +264,50 @@ def update_parameters(parameters, grads, learning_rate):
     return parameters
 
 if __name__ == "__main__":
-    # test initialaize_parameters
+    # test initialaize_parameters Done
     # parameters = initialaize_parameters(2, 2, 1)
     # print("W1 = " + str(parameters["W1"]))
     # print("b1 = " + str(parameters["b1"]))
     # print("W2 = " + str(parameters["W2"]))
     # print("b2 = " + str(parameters["b2"]))
 
-    # test initialaize_parameters_deep
+    # test initialaize_parameters_deep Done
     # parameters = initialaize_parameters_deep([5,4,3])
     # print("W1 = " + str(parameters["W1"]))
     # print("b1 = " + str(parameters["b1"]))
     # print("W2 = " + str(parameters["W2"]))
     # print("b2 = " + str(parameters["b2"]))
 
-    # test linear_forward
+    # test linear_forward Done
     # A, W, b = linear_forward_test_case()
     # Z, linear_cache = linear_forward(A, W, b)
     # print("Z = " + str(Z))
 
-    # test linear_activation_forward
+    # test linear_activation_forward Done
     # A_prev, W, b = linear_activation_forward_test_case()
     # A, linear_activation_cache = linear_activation_forward(A_prev, W, b, activation = "sigmoid")
     # print("With sigmoid:A = " +  str(A))
-
     # A, linear_activation_cache = linear_activation_forward(A_prev, W, b, activation = "relu")
     # print("With relu:A = " + str(A))
 
-    # test L_model_forward
+    # test L_model_forward Done
     # X, parameters = L_model_forward_test_case()
     # AL, caches = L_model_forward(X, parameters)
     # print("AL=" + str(AL))
     # print("Length of caches list = " + str(len(caches)))
 
-    # test compute_cost
+    # test compute_cost Done
     # Y, AL = compute_cost_test_case()
     # print("cost = " + str(compute_cost(AL, Y)))
 
-    # test linear_backward
+    # test linear_backward Done
     # dZ, linear_cache = linear_backward_test_case()
     # dA_prev, dW, db = linear_backward(dZ, linear_cache)
     # print("dA_prev = " + str(dA_prev))
     # print("dW = " + str(dW))
     # print("db = " + str(db))
 
-    # test linear_activation_backward
+    # test linear_activation_backward Done
     # AL, linear_activation_cache = linear_activation_backward_test_case()
     # dA_prev, dW, db = linear_activation_backward(AL, linear_activation_cache, activation = "sigmoid")
     # print ("sigmoid:")
@@ -321,17 +320,13 @@ if __name__ == "__main__":
     # print ("dW = " + str(dW))
     # print ("db = " + str(db))
 
-    # test L_model_backward
+    # test L_model_backward Done
     # AL, Y_assess, caches = L_model_backward_test_case()
     # grads = L_model_backward(AL, Y_assess, caches)
     # print ("dW1 = "+ str(grads["dW1"]))
     # print ("db1 = "+ str(grads["db1"]))
     # print ("dA1 = "+ str(grads["dA1"]))
 
-    # test update_parameters
+    # test update_parameters Done
     parameters, grads = update_parameters_test_case()
     parameters = update_parameters(parameters, grads, 0.1)
-    print ("W1 = "+ str(parameters["W1"]))
-    print ("b1 = "+ str(parameters["b1"]))
-    print ("W2 = "+ str(parameters["W2"]))
-    print ("b2 = "+ str(parameters["b2"]))
